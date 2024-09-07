@@ -1,0 +1,27 @@
+void setup() {
+  // put your setup code here, to run once:
+volatile char *dirk,*dirf;
+dirk=0x107;
+dirf=0x30;
+*dirk=0xff;
+*dirf=0xff;
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  volatile char *out1,*out2;
+  volatile char arr[]={0x3f,0x06,0x5B,0x4f,0x66,0x6D,0x7D,0x47,0x7F,0x6F};
+  volatile long i,j,k;
+  out1=0x31;
+  out2=0x108;
+  *out1=0x3f;
+  for(i=0;i<10;i++){
+    for(j=0;j<10;j++){
+    *out2=arr[j];
+    delay(1000);
+  }
+  *out1=arr[i+1];
+
+  }
+
+}
