@@ -1,0 +1,76 @@
+void loop(){
+
+}
+void makeportoutput(void);
+void outdata(char );
+void outcontrol(char);
+void delay1(int);
+void init_lcd(void);
+void lcd_control_write(void);
+void write_data(char);
+void write_string(char*);
+void write_string(char *ptr){
+  while(*ptr!=0){
+    write_data(*ptr);
+    ptr++;
+  }
+}
+void setup(){
+  makeportoutput();
+  init_lcd();
+  write_string("welcome");
+}
+void makeportoutput(){
+  volatile char *dirf;
+    volatile char *dirk;
+    dirk=0x107;
+  dirf=0x30;
+  *dirf=0xff;
+  *dirk=0x03;
+}
+void outdata(char out_data){
+  volatile char *out;
+  out=0x31;
+  *out=out_data;
+}
+
+void outcontrol(char out_control){
+volatile char *out;
+out=0x108;
+*out=out_control;
+}
+
+void delay1(int a){
+  volatile long i;
+  for(i=0;i<10000;i++);
+}
+
+void init_lcd()
+{
+  outdata(0x38);// function set
+  lcd_control_write();
+  outdata(0x0f);//display on or off
+  lcd_control_write();
+  outdata(0x00);//clear didplay
+  lcd_control_write(); 
+  
+  outdata(0x06);//entry mode set
+  lcd_control_write();
+
+ 
+}
+void lcd_control_write(){
+  outcontrol(0x01);
+  delay1(1);
+  outcontrol(0x00);
+  delay1(1);
+}
+void write_data(char wout){
+  outdata(wout);
+  outcontrol(0x02);
+  delay1(1);
+  outcontrol(0x03);
+  delay1(1);
+   outcontrol(0x02);
+  delay1(1);
+}
