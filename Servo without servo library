@@ -1,0 +1,30 @@
+void setup() {
+  // put your setup code here, to run once:
+volatile char *dirk=0x30;
+*dirk=0xff;
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+volatile int i;
+for(i=0;i<180;i++){
+  moveservo(i);
+  delay(10);}
+
+  for(i=180;i>=0;i--){
+  moveservo(i);
+  delay(10);
+}
+}
+void moveservo(char angle){
+   volatile char *out=0x31;
+   volatile unsigned int change;
+change =  600 + ((angle * 1800) / 180);  
+
+  *out = 0xFF;  
+  delayMicroseconds(change);
+  *out = 0x00; 
+  delayMicroseconds(20000 - change);
+ 
+
+}
